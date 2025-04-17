@@ -1,0 +1,22 @@
+
+.top-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  margin-bottom: 250px;
+  margin-top: 25px;
+}
+
+.top-buttons button {
+  background-color: #e7e7e7;
+  border: none;
+  padding: 10px 30px;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.top-buttons button:hover {
+  background-color: #00ff11;
+}
