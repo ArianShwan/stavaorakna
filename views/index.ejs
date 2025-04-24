@@ -13,7 +13,22 @@
       <button id="raknaBtn">RÄKNA</button>
     </div>
     
-
+    <div class="game-area">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      
+      <div class="image-container">
+        <img id="currentImage" src="/images/cat.png" alt="Bild att stava till">
+      </div>
+      
+      <div class="word-display" id="wordDisplay">
+        <span class="letter empty">_</span>
+        <span class="letter empty">_</span>
+        <span class="letter empty">_</span>
+        <span class="letter empty">_</span>
+      </div>
+      
       <div class="keyboard" id="keyboard">
         <div class="keyboard-row">
           <button class="key">A</button>
@@ -27,7 +42,7 @@
           <button class="key">I</button>
           <button class="key">J</button>
         </div>
-        
+
         <div class="keyboard-row">
           <button class="key">K</button>
           <button class="key">L</button>
@@ -40,7 +55,7 @@
           <button class="key">S</button>
           <button class="key">T</button>
         </div>
-
+        
         <div class="keyboard-row">
           <button class="key">U</button>
           <button class="key">V</button>
@@ -53,7 +68,8 @@
         </div>
       </div>
     </div>
-
+    
+    <div class="avatar" id="avatar">😊</div>
   </div>
 
   <script src="/js/game.js"></script>
