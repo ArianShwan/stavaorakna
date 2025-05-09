@@ -56,8 +56,8 @@
 }
 
 .image-container img {
-  max-width: max-content;
-  max-height: max-content;
+  max-width: 600px;
+  max-height: 400px;
 }
 
 .word-display {
