@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     { word: 'SKOG', image: '/images/forest.png' }
   ]
   
-
   let currentWordIndex = 0
   let currentWord = ''
   let guessedLetters = []
   let progress = 0
+  let hintTimer = null
   
   // DOM-element
   const imageElement = document.getElementById('currentImage')
@@ -26,10 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const countButton = document.getElementById('raknaBtn')
   const avatar = document.getElementById('avatar')
   
-
+  const avatarEmojis = {
+    neutral: '😊',
+    happy: '😄',
+    excited: '🤩',
+    thinking: '🤔',
+    hint: '🤫',
+    wrong: '😅'
+  }
+  
   function initGame() {
-    resetGame();
-    setupEventListeners();
+    resetGame()
+    setupEventListeners()
+    updateAvatar('neutral')
   }
   
   function resetGame() {
@@ -43,14 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
   
     const keys = document.querySelectorAll('.key');
     keys.forEach(key => {
-      key.addEventListener('click', () => handleLetterGuess(key.textContent));
-    });
+      key.addEventListener('click', () => {
+        const letter = key.textContent
+        clearHintTimer()
+        clearHints()
+        handleLetterGuess(letter)
+        startHintTimer()
+      })
+    })
   
     spellButton.addEventListener('click', resetGame);
   
     countButton.addEventListener('click', () => {
       alert('Räknespelet är under utveckling!');
-    });
+    })
   }
   
   // Ladda ett nytt ord
@@ -58,34 +73,41 @@ document.addEventListener('DOMContentLoaded', () => {
     currentWord = wordData.word
     guessedLetters = []
     
-    imageElement.src = wordData.image;
+    imageElement.src = wordData.image
     
-    updateWordDisplay();
+    updateWordDisplay()
+    clearHintTimer()
+    clearHints()
+    startHintTimer()
+    updateAvatar('neutral')
   }
 
   // Uppdatera visningen av ordet
   function updateWordDisplay() {
-    wordDisplay.innerHTML = '';
+    wordDisplay.innerHTML = ''
     
     for (let i = 0; i < currentWord.length; i++) {
       const letter = currentWord[i];
-      const letterElement = document.createElement('span');
-      letterElement.classList.add('letter');
+      const letterElement = document.createElement('span')
+      letterElement.classList.add('letter')
       
       if (guessedLetters.includes(i)) {
-        letterElement.classList.add('filled');
-        letterElement.textContent = letter;
+        letterElement.classList.add('filled')
+        letterElement.textContent = letter
       } else {
-        letterElement.classList.add('empty');
-        letterElement.textContent = '_';
+        letterElement.classList.add('empty')
+        letterElement.textContent = '_'
       }
       
-      wordDisplay.appendChild(letterElement);
+      wordDisplay.appendChild(letterElement)
     }
   }
   
   function handleLetterGuess(letter) {
     letter = letter.toUpperCase()
+    
+    // Visa tänkande avatar
+    updateAvatar('thinking')
     
     const nextEmptyIndex = getNextEmptyIndex()
     
@@ -101,15 +123,29 @@ document.addEventListener('DOMContentLoaded', () => {
       // Markera bokstaven på tangentbordet
       highlightKey(letter, true)
       
+      // Visa glad avatar
+      updateAvatar('happy')
+      
       // Kolla om ordet är komplett
       if (guessedLetters.length === currentWord.length) {
+        updateAvatar('excited')
         setTimeout(() => {
           handleWordComplete()
         }, 1000)
+      } else {
+        // Återgå till neutral efter en kort stund
+        setTimeout(() => {
+          updateAvatar('neutral')
+        }, 1500)
       }
     } else {
       // Felaktig gissning
       highlightKey(letter, false)
+      updateAvatar('wrong')
+      
+      setTimeout(() => {
+        updateAvatar('neutral')
+      }, 1000)
     }
   }
   
@@ -156,9 +192,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentWordIndex < words.length) {
       loadWord(words[currentWordIndex])
     } else {
-      alert('Bra jobbat! Du har klarat alla ord!')
-      currentWordIndex = 0;
-      loadWord(words[currentWordIndex])
+      updateAvatar('excited')
+      setTimeout(() => {
+        alert('Bra jobbat! Du har klarat alla ord!')
+        currentWordIndex = 0
+        loadWord(words[currentWordIndex])
+      }, 1000)
     }
   }
   
@@ -173,10 +212,66 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Kontrollera om det är en bokstav
     if (/^[A-ZÅÄÖ]$/.test(key)) {
+      clearHintTimer()
+      clearHints()
       handleLetterGuess(key)
+      startHintTimer()
     }
   }
-
+  
+  // Avatar-funktioner
+  function updateAvatar(mood) {
+    if (avatarEmojis[mood]) {
+      avatar.textContent = avatarEmojis[mood]
+      avatar.classList.add('bounce')
+      setTimeout(() => {
+        avatar.classList.remove('bounce')
+      }, 1000)
+    }
+  }
+  
+  // Hint-funktioner
+  function startHintTimer() {
+    clearHintTimer()
+    hintTimer = setTimeout(() => {
+      showHint()
+    }, 10000)
+  }
+  
+  function clearHintTimer() {
+    if (hintTimer) {
+      clearTimeout(hintTimer)
+      hintTimer = null
+    }
+  }
+  
+  function showHint() {
+    const nextEmptyIndex = getNextEmptyIndex()
+    
+    if (nextEmptyIndex === -1) {
+      return
+    }
+    
+    const nextLetter = currentWord[nextEmptyIndex]
+    
+    // Hitta och markera rätt tangent
+    const keys = document.querySelectorAll('.key')
+    keys.forEach(key => {
+      if (key.textContent === nextLetter) {
+        key.classList.add('hint')
+      }
+    })
+    
+    // Uppdatera avatar till ledtrådläge
+    updateAvatar('hint')
+  }
+  
+  function clearHints() {
+    const keys = document.querySelectorAll('.key')
+    keys.forEach(key => {
+      key.classList.remove('hint')
+    })
+  }
   
   // Starta spelet
   initGame()
