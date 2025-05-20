@@ -554,7 +554,7 @@ body {
   height: clamp(200px, 50vh, 500px);
   background-color: #e0e0e0;
   position: absolute;
-  left: 30px;
+  left: 15px;
   top: 50%;
   transform: translateY(-50%);
   border-radius: clamp(20px, 5vw, 60px);
