@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Avatar emojis
   const avatarEmojis = {
-    neutral: '🔢',
+    neutral: '😊',
     happy: '😄',
     excited: '🤩',
     thinking: '🤔',
