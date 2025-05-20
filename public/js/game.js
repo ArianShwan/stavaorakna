@@ -11,6 +11,29 @@ document.addEventListener('DOMContentLoaded', () => {
     { word: 'SKOG', image: '/images/forest.png' }
   ]
   
+  // Funktion för att blanda en array (Fisher-Yates shuffle algoritm)
+  function shuffleArray(array) {
+    let currentIndex = array.length
+    let temporaryValue, randomIndex
+    
+    // Medan det finns element att blanda
+    while (currentIndex !== 0) {
+      // Välj ett kvarvarande element
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex -= 1
+      
+      // Byt plats med det aktuella elementet
+      temporaryValue = array[currentIndex]
+      array[currentIndex] = array[randomIndex]
+      array[randomIndex] = temporaryValue
+    }
+    
+    return array
+  }
+  
+  // Blanda orden vid start
+  let shuffledWords = []
+  
   let currentWordIndex = 0
   let currentWord = ''
   let guessedLetters = []
@@ -37,6 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   function initGame() {
+    // Blanda orden varje gång spelet startar
+    shuffledWords = shuffleArray([...words])
     resetGame()
     setupEventListeners()
     // Sätt initial avatar
@@ -44,8 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   function resetGame() {
+    // Blanda orden på nytt när vi startar om
+    shuffledWords = shuffleArray([...words])
     currentWordIndex = 0
-    loadWord(words[currentWordIndex])
+    loadWord(shuffledWords[currentWordIndex])
     updateProgress(0)
   }
   
@@ -182,18 +209,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Hantera händelsen när ett ord är klart
   function handleWordComplete() {
     // Uppdatera framsteg
-    updateProgress((currentWordIndex + 1) / words.length * 100)
+    updateProgress((currentWordIndex + 1) / shuffledWords.length * 100)
     
     // Gå till nästa ord eller avsluta
     currentWordIndex++;
-    if (currentWordIndex < words.length) {
-      loadWord(words[currentWordIndex])
+    if (currentWordIndex < shuffledWords.length) {
+      loadWord(shuffledWords[currentWordIndex])
     } else {
       updateAvatar('excited')
       setTimeout(() => {
         alert('Bra jobbat! Du har klarat alla ord!')
+        // Blanda orden på nytt när alla ord är klara
+        shuffledWords = shuffleArray([...words])
         currentWordIndex = 0
-        loadWord(words[currentWordIndex])
+        loadWord(shuffledWords[currentWordIndex])
       }, 1000)
     }
   }
