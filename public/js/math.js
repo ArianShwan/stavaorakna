@@ -96,6 +96,171 @@ document.addEventListener('DOMContentLoaded', () => {
       <span class="question-mark">?</span>
     `
     
+    // Visa svarsalternativ
+    answerOptions.innerHTML = ''
+    options.forEach(option => {
+      const button = document.createElement('button')
+      button.classList.add('answer-btn')
+      button.textContent = option
+      button.addEventListener('click', () => checkAnswer(option, answer))
+      answerOptions.appendChild(button)
+    })
+    
+    // Visa visuella objekt för att hjälpa barnen räkna
+    visualizeQuestion(num1, num2, operator)
+  }
+  
+  function visualizeQuestion(num1, num2, operator) {
+    // Välj slumpmässiga emoji för denna fråga
+    const randomEmojiSet = mathEmojis[operator]
+    const emoji = randomEmojiSet[Math.floor(Math.random() * randomEmojiSet.length)]
+    
+    if (operator === 'addition') {
+      // För addition, visa num1 objekt, sedan + symbol, sedan num2 objekt
+      for (let i = 0; i < num1; i++) {
+        addObject(emoji)
+      }
+      
+      // Lägg till ett plustecken
+      const plusSign = document.createElement('div')
+      plusSign.textContent = '+'
+      plusSign.classList.add('object', 'operator')
+      numberObjects.appendChild(plusSign)
+      
+      // Fördröj visningen av de andra objekten
+      setTimeout(() => {
+        for (let i = 0; i < num2; i++) {
+          addObject(emoji)
+        }
+      })
+      
+    } else if (operator === 'subtraction') {
+      // För subtraktion, visa num1 objekt, några av dem kommer att korsas över
+      for (let i = 0; i < num1; i++) {
+        const obj = addObject(emoji)
+        
+        // De sista num2 objekten kommer att korsas över
+        if (i >= num1 - num2) {
+          setTimeout(() => {
+            obj.style.opacity = '0.3'
+            obj.style.textDecoration = 'line-through'
+          }, 1500)
+        }
+      }
+    }
+  }
+  
+  function addObject(emoji) {
+    const obj = document.createElement('div')
+    obj.textContent = emoji
+    obj.classList.add('object')
+    numberObjects.appendChild(obj)
+    return obj
+  }
+  
+  function checkAnswer(selectedAnswer, correctAnswer) {
+    const isCorrect = selectedAnswer === correctAnswer
+    
+    // Hitta den valda knappen och markera den
+    const buttons = answerOptions.querySelectorAll('.answer-btn')
+    buttons.forEach(button => {
+      if (parseInt(button.textContent) === selectedAnswer) {
+        button.classList.add(isCorrect ? 'correct' : 'incorrect')
+      }
+      
+      // Inaktivera alla knappar tillfälligt
+      button.disabled = true
+    })
+    
+    // Uppdatera avatar
+    updateAvatar(isCorrect ? 'happy' : 'wrong')
+    
+    // Om svaret är korrekt, uppdatera poäng och visa nästa fråga
+    if (isCorrect) {
+      currentScore++
+    }
+    
+    // Vänta och gå vidare till nästa fråga
+    setTimeout(() => {
+      currentQuestion++
+      
+      // Kolla om spelet är klart
+      if (currentQuestion > totalQuestions) {
+        finishGame()
+      } else {
+        // Uppdatera progress
+        updateProgress((currentQuestion - 1) / totalQuestions * 100)
+        
+        // Uppdatera frågenummer
+        currentQuestionEl.textContent = currentQuestion
+        
+        // Generera ny fråga
+        generateQuestion()
+        
+        // Återställ avatar
+        updateAvatar('neutral')
+      }
+    }, 1500)
+  }
+  
+  function finishGame() {
+    // Visa resultat
+    updateAvatar('excited')
+    
+    setTimeout(() => {
+      alert(`Bra jobbat! Du fick ${currentScore} av ${totalQuestions} rätt!`)
+      
+      // Återställ spelet
+      currentQuestion = 1
+      currentScore = 0
+      
+      // Uppdatera display
+      currentQuestionEl.textContent = currentQuestion
+      
+      // Återställ progress
+      updateProgress(0)
+      
+      // Generera ny fråga
+      generateQuestion()
+      
+      // Återställ avatar
+      updateAvatar('neutral')
+    }, 1000)
+  }
+  
+  function updateProgress(percent) {
+    progressFill.style.height = `${percent}%`
+  }
+  
+  function updateAvatar(mood) {
+    if (avatarEmojis[mood]) {
+      avatar.textContent = avatarEmojis[mood]
+      avatar.classList.add('bounce')
+      setTimeout(() => {
+        avatar.classList.remove('bounce')
+      }, 1000)
+    }
+  }
+  
+  // Funktion för att blanda en array (Fisher-Yates shuffle algoritm)
+  function shuffleArray(array) {
+    let currentIndex = array.length
+    let temporaryValue, randomIndex
+    
+    // Medan det finns element att blanda
+    while (currentIndex !== 0) {
+      // Välj ett kvarvarande element
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex -= 1
+      
+      // Byt plats med det aktuella elementet
+      temporaryValue = array[currentIndex]
+      array[currentIndex] = array[randomIndex]
+      array[randomIndex] = temporaryValue
+    }
+    
+    return array
+  }
   
   // Starta spelet
   initGame()
