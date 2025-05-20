@@ -3,75 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stavningsspel för barn</title>
+  <title>Lärspel för barn</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="game-container">
-    <div class="top-buttons">
-      <button id="stavaBtn">STAVA</button>
-      <button id="raknaBtn">RÄKNA</button>
+  <div class="start-container">
+    <h1 class="game-title">Lärspel för barn</h1>
+    
+    <div class="mode-buttons">
+      <a href="/stava" class="mode-button" id="stavaBtn">
+        <div class="mode-icon">✏️</div>
+        <div class="mode-name">STAVA</div>
+      </a>
+      
+      <a href="/rakna" class="mode-button" id="raknaBtn">
+        <div class="mode-icon">🔢</div>
+        <div class="mode-name">RÄKNA</div>
+      </a>
     </div>
     
-    <div class="game-area">
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      
-      <div class="image-container">
-        <img id="currentImage" src="/images/cat.png" alt="Bild att stava till">
-      </div>
-      
-      <div class="word-display" id="wordDisplay">
-        <span class="letter empty">_</span>
-        <span class="letter empty">_</span>
-        <span class="letter empty">_</span>
-        <span class="letter empty">_</span>
-      </div>
-      
-      <div class="keyboard" id="keyboard">
-        <div class="keyboard-row">
-          <button class="key">A</button>
-          <button class="key">B</button>
-          <button class="key">C</button>
-          <button class="key">D</button>
-          <button class="key">E</button>
-          <button class="key">F</button>
-          <button class="key">G</button>
-          <button class="key">H</button>
-          <button class="key">I</button>
-          <button class="key">J</button>
-        </div>
-
-        <div class="keyboard-row">
-          <button class="key">K</button>
-          <button class="key">L</button>
-          <button class="key">M</button>
-          <button class="key">N</button>
-          <button class="key">O</button>
-          <button class="key">P</button>
-          <button class="key">Q</button>
-          <button class="key">R</button>
-          <button class="key">S</button>
-          <button class="key">T</button>
-        </div>
-        
-        <div class="keyboard-row">
-          <button class="key">U</button>
-          <button class="key">V</button>
-          <button class="key">X</button>
-          <button class="key">Y</button>
-          <button class="key">Z</button>
-          <button class="key">Å</button>
-          <button class="key">Ä</button>
-          <button class="key">Ö</button>
-        </div>
-      </div>
-    </div>
-    
-    <div class="avatar" id="avatar">😊</div>
+    <div class="avatar" id="startAvatar">😀</div>
   </div>
-
-  <script src="/js/game.js"></script>
+  
+  <script src="/js/start.js"></script>
 </body>
 </html>

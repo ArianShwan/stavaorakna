@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const countButton = document.getElementById('raknaBtn')
   const avatar = document.getElementById('avatar')
   
+  // Avatar emojis
   const avatarEmojis = {
     neutral: '😊',
     happy: '😄',
@@ -38,19 +39,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function initGame() {
     resetGame()
     setupEventListeners()
+    // Sätt initial avatar
     updateAvatar('neutral')
   }
   
   function resetGame() {
-    currentWordIndex = 0;
-    loadWord(words[currentWordIndex]);
-    updateProgress(0);
+    currentWordIndex = 0
+    loadWord(words[currentWordIndex])
+    updateProgress(0)
   }
   
   function setupEventListeners() {
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown)
   
-    const keys = document.querySelectorAll('.key');
+    const keys = document.querySelectorAll('.key')
     keys.forEach(key => {
       key.addEventListener('click', () => {
         const letter = key.textContent
@@ -61,11 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     })
   
-    spellButton.addEventListener('click', resetGame);
-  
-    countButton.addEventListener('click', () => {
-      alert('Räknespelet är under utveckling!');
-    })
   }
   
   // Ladda ett nytt ord
@@ -87,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wordDisplay.innerHTML = ''
     
     for (let i = 0; i < currentWord.length; i++) {
-      const letter = currentWord[i];
+      const letter = currentWord[i]
       const letterElement = document.createElement('span')
       letterElement.classList.add('letter')
       

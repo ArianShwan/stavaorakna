@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Räknespel för barn</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="game-container">
+    <div class="top-buttons">
+      <a href="/" class="nav-button">HEM</a>
+      <a href="/stava" class="nav-button">STAVA</a>
+      <a href="/rakna" class="nav-button">RÄKNA</a>
+    </div>
+    
+    <div class="game-area">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      
+      <div class="coming-soon">
+        <h2>Räknespelet är under utveckling!</h2>
+        <p>Vi arbetar hårt för att göra ett roligt räknespel för dig!</p>
+        <div class="construction-emoji">🚧</div>
+      </div>
+    </div>
+    
+    <div class="avatar" id="avatar">🔢</div>
+  </div>
+  
+  <script>
+    // Enkel script för rakna.ejs
+    document.addEventListener('DOMContentLoaded', () => {
+      const avatar = document.getElementById('avatar')
+      
+      // Bounce-animation för avatar
+      avatar.classList.add('bounce')
+      setTimeout(() => {
+        avatar.classList.remove('bounce')
+      }, 1000)
+      
+      // Debug för länkar
+      const navLinks = document.querySelectorAll('.nav-button')
+      navLinks.forEach(link => {
+        console.log('Nav link:', link.href)
+        
+        // Försäkra oss om att klicken fungerar
+        link.addEventListener('click', (e) => {
+          console.log('Klickade på:', link.href)
+        })
+      })
+    })
+  </script>
+</body>
+</html>
