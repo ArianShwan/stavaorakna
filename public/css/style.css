@@ -142,7 +142,7 @@ body {
   background-color: #e0e0e0;
   position: absolute;
   left: clamp(5px, 3vw, 50px);
-  top: 25%;
+  top: 50%;
   transform: translateY(-50%);
   border-radius: clamp(20px, 5vw, 80px);
   overflow: hidden;
@@ -421,6 +421,14 @@ body {
   font-size: clamp(1rem, 3vw, 1.5rem);
   margin-top: clamp(10px, 2vh, 20px);
   color: #555;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px 15px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 /* Touch device optimeringar */

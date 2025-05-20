@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const spellButton = document.getElementById('stavaBtn')
   const countButton = document.getElementById('raknaBtn')
   const avatar = document.getElementById('avatar')
+  const currentQuestionEl = document.getElementById('currentQuestion')
+  const totalQuestionsEl = document.getElementById('totalQuestions')
   
   // Avatar emojis
   const avatarEmojis = {
@@ -64,6 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
     shuffledWords = shuffleArray([...words])
     resetGame()
     setupEventListeners()
+    // Uppdatera framstegsindikator med antal ord
+    totalQuestionsEl.textContent = shuffledWords.length
+    currentQuestionEl.textContent = currentWordIndex + 1
     // Sätt initial avatar
     updateAvatar('neutral')
   }
@@ -214,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gå till nästa ord eller avsluta
     currentWordIndex++;
     if (currentWordIndex < shuffledWords.length) {
+      currentQuestionEl.textContent = currentWordIndex + 1
       loadWord(shuffledWords[currentWordIndex])
     } else {
       updateAvatar('excited')
@@ -222,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Blanda orden på nytt när alla ord är klara
         shuffledWords = shuffleArray([...words])
         currentWordIndex = 0
+        currentQuestionEl.textContent = currentWordIndex + 1
         loadWord(shuffledWords[currentWordIndex])
       }, 1000)
     }
