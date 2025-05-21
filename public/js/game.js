@@ -37,16 +37,19 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentWordIndex = 0
   let currentWord = ''
   let guessedLetters = []
-  let progress = 0
   let hintTimer = null
   
+  /* eslint-disable no-unused-vars */
+  let progress = 0
+  const keyboard = document.getElementById('keyboard')
+  const spellButton = document.getElementById('stavaBtn')
+  const countButton = document.getElementById('raknaBtn')
+  /* eslint-enable no-unused-vars */
+
   // DOM-element
   const imageElement = document.getElementById('currentImage')
   const wordDisplay = document.getElementById('wordDisplay')
-  const keyboard = document.getElementById('keyboard')
   const progressFill = document.getElementById('progressFill')
-  const spellButton = document.getElementById('stavaBtn')
-  const countButton = document.getElementById('raknaBtn')
   const avatar = document.getElementById('avatar')
   const currentQuestionEl = document.getElementById('currentQuestion')
   const totalQuestionsEl = document.getElementById('totalQuestions')

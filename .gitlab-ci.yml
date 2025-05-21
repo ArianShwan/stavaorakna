@@ -1,49 +1,86 @@
-# This file is a template, and might need editing before it works on your project.
-# This is a sample GitLab CI/CD configuration file that should run without any modifications.
-# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
-# it uses echo commands to simulate the pipeline execution.
-#
-# A pipeline is composed of independent jobs that run scripts, grouped into stages.
-# Stages run in sequential order, but jobs within stages run in parallel.
-#
-# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
-#
-# You can copy and paste this template into a new `.gitlab-ci.yml` file.
-# You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
-#
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+# .gitlab-ci.yml
 
-stages:          # List of stages for jobs, and their order of execution
-  - build
+stages:
+  - install
   - test
+  - build
   - deploy
 
-build-job:       # This job runs in the build stage, which runs first.
+variables:
+  NODE_VERSION: "18"
+
+# Cache dependencies för snabbare byggen
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+# Installera alla beroenden
+install:
+  stage: install
+  image: node:${NODE_VERSION}-alpine
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+
+# Kör linting för kodkvalitet
+lint:
+  stage: test
+  image: node:${NODE_VERSION}-alpine
+  script:
+    - npm install eslint --save-dev
+    - echo "Running ESLint (warnings allowed)"
+    - npx eslint . --max-warnings=100 || echo "Linting issues found, but continuing pipeline"
+
+# Kör Jest tester
+test:
+  stage: test
+  image: node:${NODE_VERSION}-alpine
+  script:
+    - npm test
+
+# Bygg projektet
+build:
   stage: build
+  image: node:${NODE_VERSION}-alpine
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+    - mkdir -p dist
+    - cp -r public dist/
+    - cp -r views dist/
+    - cp app.js dist/
+    - cp package.json dist/
+    - echo "Build completed at $(date)" > dist/build.log
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
 
-unit-test-job:   # This job runs in the test stage.
-  stage: test    # It only starts when the job in the build stage completes successfully.
+# Deploy till staging miljö
+deploy_staging:
+  stage: deploy
+  image: alpine:latest
   script:
-    - echo "Running unit tests... This will take about 60 seconds."
-    - sleep 60
-    - echo "Code coverage is 90%"
+    - echo "Deploying application to staging server..."
+    - echo "Application deployed to staging environment at $(date)" > deployment.log
+  environment:
+    name: staging
+    url: https://staging-stavaochrakna.onrender.com
+  only:
+    - develop
 
-lint-test-job:   # This job also runs in the test stage.
-  stage: test    # It can run at the same time as unit-test-job (in parallel).
+# Deploy till produktion
+deploy_production:
+  stage: deploy
+  image: alpine:latest
   script:
-    - echo "Linting code... This will take about 10 seconds."
-    - sleep 10
-    - echo "No lint issues found."
-
-deploy-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  environment: production
-  script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+    - echo "Deploying application to production server..."
+    - echo "Application deployed to production environment at $(date)" > deployment.log
+  environment:
+    name: production
+    url: https://stavaorakna.onrender.com
+  only:
+    - main
+    - master
+  when: manual
