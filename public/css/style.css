@@ -142,10 +142,11 @@ body {
   background-color: #e0e0e0;
   position: absolute;
   left: clamp(5px, 3vw, 50px);
-  top: 50%;
+  top: 35%;
   transform: translateY(-50%);
   border-radius: clamp(20px, 5vw, 80px);
   overflow: hidden;
+  z-index: 90;
 }
 
 .progress-fill {
@@ -424,7 +425,7 @@ body {
   margin-top: clamp(10px, 2vh, 20px);
   color: #555;
   position: absolute;
-  bottom: 1px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(255, 255, 255, 0.8);
@@ -457,24 +458,139 @@ body {
 
 /* iPad och surfplattor */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .keyboard-row {
-    gap: 10px;
+  .game-container {
+    padding: 15px;
+    max-height: 95vh;
   }
   
-  .key {
-    width: 45px;
-    height: 45px;
+  .game-area {
+    max-height: 85vh;
+    justify-content: center;
   }
   
   .progress-bar {
-    left: 20px;
-    height: 500px;
+    left: 15px;
+    height: 400px;
+    top: 30%;
+  }
+  
+  .image-container {
+    margin: 15px 0;
+    max-height: 35vh;
+  }
+  
+  .image-container img {
+    max-height: 35vh;
+  }
+  
+  .keyboard {
+    margin-top: 30px;
+    gap: 15px;
+    transform: scale(0.95);
+  }
+  
+  .keyboard-row {
+    gap: 8px;
+  }
+  
+  .key {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+  
+  .word-display {
+    margin: 20px 0;
+    gap: 20px;
+  }
+  
+  .letter {
+    font-size: 40px;
+    width: 50px;
   }
   
   .avatar {
+    width: 90px;
+    height: 90px;
+    font-size: 60px;
+    top: 15px;
+    right: 15px;
+  }
+  
+  .questions-remaining {
+    bottom: 60px;
+    font-size: 1.2rem;
+  }
+  
+  /* Math game specifika justeringar för iPad */
+  .math-container {
+    height: 60vh;
+    padding: 20px 0;
+  }
+  
+  .math-problem {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .answer-btn {
     width: 100px;
     height: 100px;
-    font-size: 70px;
+    font-size: 2.5rem;
+  }
+  
+  .number-objects {
+    max-width: 450px;
+    min-height: 120px;
+    margin: 15px 0;
+  }
+  
+  .object {
+    font-size: 35px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .game-container {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .progress-bar {
+    height: 300px;
+    top: 25%;
+  }
+  
+  .image-container {
+    max-height: 25vh;
+  }
+  
+  .image-container img {
+    max-height: 25vh;
+  }
+  
+  .keyboard {
+    margin-top: 15px;
+    transform: scale(0.9);
+  }
+  
+  .math-container {
+    height: 50vh;
+  }
+  
+  .math-problem {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .answer-btn {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+  
+  .questions-remaining {
+    bottom: 20px;
   }
 }
 
