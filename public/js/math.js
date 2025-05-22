@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100)
   }, 1000)
 }
-  // Stäng popup
+  // Startar spelet igen
 function restartGame() {
   // Återställ spelvariabler
   currentQuestion = 1
@@ -298,17 +298,18 @@ function showPopup(emoji, title, message, buttonText = 'Spela igen') {
       closePopup()
     }
   }
-
+  // Stäng popup-funktionen
   function closePopup() {
   const popup = document.getElementById('successPopup')
   popup.classList.remove('show')
 }
 }
-
+  // Uppdatera progress bar
   function updateProgress(percent) {
     progressFill.style.height = `${percent}%`
   }
   
+  // Uppdatera avatar beroende på humör
   function updateAvatar(mood) {
     if (avatarEmojis[mood]) {
       avatar.textContent = avatarEmojis[mood]

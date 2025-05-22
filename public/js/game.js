@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateAvatar('neutral')
   }
   
+  // Funktion för att starta om spelet
   function resetGame() {
     // Blanda orden på nytt när vi startar om
     shuffledWords = shuffleArray([...words])
@@ -84,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgress(0)
   }
   
+  // Funktion för att sätta upp händelselyssnare
   function setupEventListeners() {
     document.addEventListener('keydown', handleKeyDown)
   
@@ -134,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       wordDisplay.appendChild(letterElement)
     }
   }
-  
+  // Hantera gissning av bokstav
   function handleLetterGuess(letter) {
     letter = letter.toUpperCase()
     
@@ -271,12 +273,12 @@ function showPopup(emoji, title, message, buttonText = 'Spela igen') {
   
   popup.classList.add('show')
   
-  // Viktiga delen - lägg till click event för knappen
+  // Lägg till händelselyssnare för popup-knappen
   popupButton.onclick = function() {
     closePopup()
     restartGame()
   }
-  
+  // Lägg till händelselyssnare för att stänga popup genom att klicka utanför den
   popup.onclick = function(e) {
     if (e.target === popup) {
       closePopup()
@@ -327,6 +329,7 @@ function showPopup(emoji, title, message, buttonText = 'Spela igen') {
     }, 10000)
   }
   
+  // Rensa hint-timer
   function clearHintTimer() {
     if (hintTimer) {
       clearTimeout(hintTimer)
@@ -334,6 +337,7 @@ function showPopup(emoji, title, message, buttonText = 'Spela igen') {
     }
   }
   
+  // Visa ledtråd
   function showHint() {
     const nextEmptyIndex = getNextEmptyIndex()
     
@@ -355,6 +359,7 @@ function showPopup(emoji, title, message, buttonText = 'Spela igen') {
     updateAvatar('hint')
   }
   
+  // Rensa alla ledtrådar
   function clearHints() {
     const keys = document.querySelectorAll('.key')
     keys.forEach(key => {
