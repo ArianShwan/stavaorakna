@@ -204,13 +204,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   function finishGame() {
-    // Visa resultat
-    updateAvatar('excited')
+  // Visa resultat
+  updateAvatar('excited')
+  
+  setTimeout(() => {
+    // Bestäm emoji baserat på resultat
+    let emoji = '🎉'
+    let title = 'Bra jobbat!'
+    let message = `Du fick ${currentScore} av ${totalQuestions} rätt!`
     
+    // Anpassa meddelande baserat på poäng
+    if (currentScore === totalQuestions) {
+      emoji = '🏆'
+      title = 'Perfekt!'
+      message = `Du fick alla ${totalQuestions} rätt! Du är en matematikstjärna! ⭐`
+    } else if (currentScore >= totalQuestions * 0.8) {
+      emoji = '🌟'
+      title = 'Fantastiskt!'
+      message = `Du fick ${currentScore} av ${totalQuestions} rätt! Mycket bra jobbat! 👏`
+    } else if (currentScore >= totalQuestions * 0.6) {
+      emoji = '😊'
+      title = 'Bra jobbat!'
+      message = `Du fick ${currentScore} av ${totalQuestions} rätt! Fortsätt träna så blir du ännu bättre! 💪`
+    } else {
+      emoji = '🤗'
+      title = 'Bra försök!'
+      message = `Du fick ${currentScore} av ${totalQuestions} rätt! Träning ger färdighet! 📚`
+    }
+    
+    // Visa snygg popup istället för alert
+    showPopup(emoji, title, message)
+    
+    // Återställ spelet när popup stängs
     setTimeout(() => {
-      alert(`Bra jobbat! Du fick ${currentScore} av ${totalQuestions} rätt!`)
-      
-      // Återställ spelet
       currentQuestion = 1
       currentScore = 0
       
@@ -225,9 +251,60 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Återställ avatar
       updateAvatar('neutral')
-    }, 1000)
+    }, 100)
+  }, 1000)
+}
+  // Stäng popup
+function restartGame() {
+  // Återställ spelvariabler
+  currentQuestion = 1
+  currentScore = 0
+  
+  // Uppdatera display
+  currentQuestionEl.textContent = currentQuestion
+  updateProgress(0)
+  
+  // Generera ny fråga
+  generateQuestion()
+  updateAvatar('neutral')
+}
+
+// Lägg till popup-funktionerna i math.js också
+function showPopup(emoji, title, message, buttonText = 'Spela igen') {
+  const popup = document.getElementById('successPopup')
+  const popupEmoji = document.getElementById('popupEmoji')
+  const popupTitle = document.getElementById('popupTitle')
+  const popupMessage = document.getElementById('popupMessage')
+  const popupButton = document.getElementById('popupButton')
+  
+  // Uppdatera innehåll
+  popupEmoji.textContent = emoji
+  popupTitle.textContent = title
+  popupMessage.textContent = message
+  popupButton.textContent = buttonText
+
+  // Visa popup
+  popup.classList.add('show')
+  
+  // Lägg till event listener för "Spela igen"-knappen
+  popupButton.onclick = function() {
+    closePopup()
+    restartGame()
   }
   
+  // Lägg till event listener för stängning genom klick på overlay
+  popup.onclick = function(e) {
+    if (e.target === popup) {
+      closePopup()
+    }
+  }
+
+  function closePopup() {
+  const popup = document.getElementById('successPopup')
+  popup.classList.remove('show')
+}
+}
+
   function updateProgress(percent) {
     progressFill.style.height = `${percent}%`
   }

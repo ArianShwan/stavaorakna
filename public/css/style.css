@@ -614,3 +614,147 @@ body {
     margin-top: 10px;
   }
 }
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.popup-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Popup container */
+.popup {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: scale(0.8) translateY(-50px);
+  transition: transform 0.3s ease;
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+  overflow: hidden;
+}
+
+.popup-overlay.show .popup {
+  transform: scale(1) translateY(0);
+}
+
+/* Popup innehåll */
+.popup-emoji {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: bounce 1s infinite;
+}
+
+.popup-title {
+  color: white;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.popup-message {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  margin-bottom: 30px;
+  line-height: 1.4;
+}
+
+.popup-button {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.popup-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.popup-button:active {
+  transform: translateY(0);
+}
+
+/* Konfetti animation */
+.popup::before {
+  content: '🎉';
+  position: absolute;
+  top: -10px;
+  left: 10%;
+  font-size: 2rem;
+  animation: confetti 1.5s ease-in-out infinite;
+}
+
+.popup::after {
+  content: '🎊';
+  position: absolute;
+  top: -10px;
+  right: 10%;
+  font-size: 2rem;
+  animation: confetti 1.5s ease-in-out infinite 0.5s;
+}
+
+/* Animationer */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+/* Responsiv design för popup */
+@media (max-width: 480px) {
+  .popup {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  
+  .popup-emoji {
+    font-size: 3rem;
+  }
+}

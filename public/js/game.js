@@ -216,26 +216,79 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Hantera händelsen när ett ord är klart
   function handleWordComplete() {
-    // Uppdatera framsteg
-    updateProgress((currentWordIndex + 1) / shuffledWords.length * 100)
-    
-    // Gå till nästa ord eller avsluta
-    currentWordIndex++;
-    if (currentWordIndex < shuffledWords.length) {
-      currentQuestionEl.textContent = currentWordIndex + 1
-      loadWord(shuffledWords[currentWordIndex])
-    } else {
-      updateAvatar('excited')
+  // Uppdatera framsteg
+  updateProgress((currentWordIndex + 1) / shuffledWords.length * 100)
+  
+  // Gå till nästa ord eller avsluta
+  currentWordIndex++
+  if (currentWordIndex < shuffledWords.length) {
+    currentQuestionEl.textContent = currentWordIndex + 1
+    loadWord(shuffledWords[currentWordIndex])
+  } else {
+    updateAvatar('excited')
+    setTimeout(() => {
+      // Visa snygg popup istället för alert
+      showPopup(
+        '🎉', 
+        'Fantastiskt!', 
+        'Du har klarat alla ord! Du är en stavningsstjärna! ⭐'
+      )
+      
+      // Starta om spelet när popup stängs
       setTimeout(() => {
-        alert('Bra jobbat! Du har klarat alla ord!')
         // Blanda orden på nytt när alla ord är klara
         shuffledWords = shuffleArray([...words])
         currentWordIndex = 0
         currentQuestionEl.textContent = currentWordIndex + 1
         loadWord(shuffledWords[currentWordIndex])
-      }, 1000)
+      }, 100)
+    }, 1000)
+  }
+}
+
+// Lägg till popup-funktionerna i game.js också
+function restartGame() {
+  shuffledWords = shuffleArray([...words])
+  currentWordIndex = 0
+  currentQuestionEl.textContent = currentWordIndex + 1
+  updateProgress(0)
+  loadWord(shuffledWords[currentWordIndex])
+  updateAvatar('neutral')
+}
+
+// Uppdatera showPopup-funktionen
+function showPopup(emoji, title, message, buttonText = 'Spela igen') {
+  const popup = document.getElementById('successPopup')
+  const popupEmoji = document.getElementById('popupEmoji')
+  const popupTitle = document.getElementById('popupTitle')
+  const popupMessage = document.getElementById('popupMessage')
+  const popupButton = document.getElementById('popupButton')
+  
+  popupEmoji.textContent = emoji
+  popupTitle.textContent = title
+  popupMessage.textContent = message
+  popupButton.textContent = buttonText
+  
+  popup.classList.add('show')
+  
+  // Viktiga delen - lägg till click event för knappen
+  popupButton.onclick = function() {
+    closePopup()
+    restartGame()
+  }
+  
+  popup.onclick = function(e) {
+    if (e.target === popup) {
+      closePopup()
     }
   }
+
+  function closePopup() {
+  const popup = document.getElementById('successPopup')
+  popup.classList.remove('show')
+}
+}
+
   
   // Uppdatera framstegsindikator
   function updateProgress(percent) {
