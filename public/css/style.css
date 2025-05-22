@@ -9,7 +9,7 @@ body {
   font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -26,29 +26,24 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f3f7ff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   position: relative;
   padding: 1rem;
 }
 
+
 .game-title {
   font-size: clamp(2rem, 5vw, 3rem);
   margin-bottom: clamp(2rem, 10vh, 5rem);
-  color: #333;
+  color: white;
   text-align: center;
-}
-
-.mode-buttons {
-  display: flex;
-  gap: clamp(1rem, 3vw, 2rem);
-  justify-content: center;
-  flex-wrap: wrap;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .mode-button {
-  width: clamp(200px, 40vw, 280px);
-  height: clamp(200px, 40vw, 280px);
-  background-color: #ffffff;
+  width: clamp(180px, 35vw, 250px);
+  height: clamp(180px, 35vw, 250px);
+  background-color: rgba(255, 255, 255, 0.95);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,24 +51,42 @@ body {
   border-radius: 20px;
   text-decoration: none;
   color: #333;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.mode-buttons {
+  display: flex;
+  gap: clamp(2rem, 5vw, 4rem);
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .mode-button:hover, .mode-button:active {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .mode-button#stavaBtn {
-  background-color: #f3f7ff;
+  background-color: rgba(232, 245, 233, 0.95);
   border: 5px solid #4caf50;
 }
 
+.mode-button#stavaBtn:hover {
+  background-color: rgba(232, 245, 233, 1);
+}
+
 .mode-button#raknaBtn {
-  background-color: #f3f7ff;
+  background-color: rgba(227, 242, 253, 0.95);
   border: 5px solid #2196f3;
+}
+
+.mode-button#raknaBtn:hover {
+  background-color: rgba(227, 242, 253, 1);
 }
 
 .mode-icon {
@@ -93,6 +106,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .top-buttons {
@@ -104,13 +118,13 @@ body {
 }
 
 .top-buttons button, .top-buttons a, .nav-button {
-  background-color: #e7e7e7;
+  background-color: rgba(255, 255, 255, 0.9);
   border: none;
   padding: clamp(8px, 2vw, 10px) clamp(15px, 2vw, 30px);
   font-size: clamp(16px, 3vw, 20px);
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
   text-decoration: none;
   color: #333;
   display: flex;
@@ -118,10 +132,14 @@ body {
   justify-content: center;
   font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
   font-weight: normal;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .top-buttons button:hover, .top-buttons a:hover, .nav-button:hover {
-  background-color: #00ff11;
+  background-color: rgba(0, 255, 17, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .game-area {
@@ -133,13 +151,13 @@ body {
   padding: 0 clamp(10px, 3vw, 20px);
   width: 100%;
   overflow-x: hidden;
-  
+  margin-bottom: 40px;
 }
 
 .progress-bar {
   width: clamp(20px, 5vw, 80px);
   height: clamp(200px, 50vh, 600px);
-  background-color: #e0e0e0;
+  background-color: rgba(255, 255, 255, 0.2);
   position: absolute;
   left: clamp(5px, 3vw, 50px);
   top: 35%;
@@ -147,15 +165,18 @@ body {
   border-radius: clamp(20px, 5vw, 80px);
   overflow: hidden;
   z-index: 90;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .progress-fill {
   width: 100%;
-  background-color: #4caf50;
+  background: linear-gradient(180deg, #4caf50 0%, #66bb6a 100%);
   position: absolute;
   bottom: 0;
   height: 50%;
   transition: height 0.3s;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
 }
 
 .image-container {
@@ -164,12 +185,17 @@ body {
   justify-content: center;
   align-items: center;
   max-height: 40vh;
-  width: 100%;
+  width: 20%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .image-container img {
   max-width: 100%;
-  max-height: clamp(150px, 40vh, 600px);
+  max-height: clamp(150px, 40vh, 500px);
   object-fit: contain;
 }
 
@@ -187,10 +213,6 @@ body {
   text-align: center;
   border-bottom: 3px solid black;
   padding: 5px 0;
-}
-
-.letter.filled {
-  color: black;
 }
 
 .letter.empty {
@@ -231,7 +253,9 @@ body {
 }
 
 .key:hover {
-  background-color: #d0d0d0;
+  background-color: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .key.correct {
@@ -328,6 +352,11 @@ body {
   height: clamp(300px, 70vh, 700px);
   width: clamp(300px, 80%, 800px);
   margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .math-problem {
@@ -338,8 +367,9 @@ body {
   justify-content: center;
   gap: clamp(10px, 2vw, 20px);
   flex-wrap: wrap;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-
 .number {
   font-weight: bold;
   color: #333;
@@ -374,19 +404,21 @@ body {
   height: clamp(80px, 15vw, 120px);
   border-radius: 50%;
   border: none;
-  background-color: #e3f2fd;
+  background-color: rgba(227, 242, 253, 0.9);
   font-size: clamp(1.5rem, 5vw, 3rem);
   font-weight: bold;
   color: #333;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .answer-btn:hover, .answer-btn:active {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0,0,0,0.15);
-  background-color: #bbdefb;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  background-color: rgba(187, 222, 251, 1);
 }
 
 .answer-btn.correct {
@@ -423,15 +455,18 @@ body {
 .questions-remaining {
   font-size: clamp(1rem, 3vw, 1.5rem);
   margin-top: clamp(10px, 2vh, 20px);
-  color: #555;
+  color: white;
   position: absolute;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 5px 15px;
-  border-radius: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 8px 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Touch device optimeringar */
@@ -479,25 +514,41 @@ body {
     max-height: 35vh;
   }
   
-  .image-container img {
-    max-height: 35vh;
-  }
   
   .keyboard {
-    margin-top: 30px;
-    gap: 15px;
-    transform: scale(0.95);
-  }
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2vh, 20px);
+  margin-top: clamp(20px, 4vh, 50px);
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
   
   .keyboard-row {
     gap: 8px;
   }
   
   .key {
-    width: 42px;
-    height: 42px;
-    font-size: 18px;
-  }
+  width: clamp(35px, 8vw, 50px);
+  height: clamp(35px, 8vw, 50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 6px;
+  font-size: clamp(16px, 3vw, 20px);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
   
   .word-display {
     margin: 20px 0;
@@ -510,12 +561,22 @@ body {
   }
   
   .avatar {
-    width: 90px;
-    height: 90px;
-    font-size: 60px;
-    top: 15px;
-    right: 15px;
-  }
+  position: absolute;
+  top: clamp(10px, 3vh, 20px);
+  right: clamp(10px, 3vw, 20px);
+  width: clamp(80px, 12vw, 120px);
+  height: clamp(80px, 12vw, 120px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(40px, 8vw, 80px);
+  z-index: 100;
+  transition: transform 0.3s;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
   
   .questions-remaining {
     bottom: 60px;
@@ -565,9 +626,6 @@ body {
     max-height: 25vh;
   }
   
-  .image-container img {
-    max-height: 25vh;
-  }
   
   .keyboard {
     margin-top: 15px;
@@ -696,18 +754,28 @@ body {
 .word-display {
   display: flex;
   justify-content: center;
-  margin: 30px 0;
-  gap: 15px;
+  margin: clamp(15px, 3vh, 30px) 0;
+  gap: clamp(10px, 2vw, 25px);
   flex-wrap: wrap;
-  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .letter {
-  font-size: clamp(24px, 5vw, 42px);
-  width: clamp(35px, 8vw, 50px);
+  font-size: clamp(24px, 5vw, 48px);
+  width: clamp(40px, 8vw, 60px);
   text-align: center;
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.8);
   padding: 5px 0;
+  color: white;
+}
+
+.letter.filled {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Mobilanpassning för iPhone och liknande enheter */
