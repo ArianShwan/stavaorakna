@@ -4,7 +4,7 @@
 
 Ett interaktivt pedagogiskt spel designat för att hjälpa barn lära sig stava och räkna på ett roligt och engagerande sätt.
 
-![Spel Demo](docs/demo-image.png) <!-- Lägg till en skärmdump av ditt spel här -->
+![Spel Demo](images/startsida.png)
 
 ## 🌟 Funktioner
 
